@@ -1,0 +1,12 @@
+.finalizada {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+.table-actions {
+    white-space: nowrap;
+}
+
+.badge-prioridad {
+    min-width: 65px;
+}
