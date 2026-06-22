@@ -45,6 +45,7 @@ require_once __DIR__ . '/../includes/header.php';
 
     <div class="d-flex gap-2">
         <a class="btn btn-secondary" href="../index.php">Volver</a>
+        <a class="btn btn-outline-secondary" href="tablero.php">Ver tablero</a>
         <a class="btn btn-primary" href="crear.php">Nueva tarea</a>
     </div>
 </div>
