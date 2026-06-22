@@ -20,6 +20,17 @@ $baseUrl = $baseUrl ?? '.';
             <span class="navbar-toggler-icon"></span>
         </button>
         <div id="menuPrincipal" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $baseUrl ?>/responsables/index.php">Responsables</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $baseUrl ?>/tareas/index.php">Tareas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $baseUrl ?>/grupos/index.php">Grupos</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
