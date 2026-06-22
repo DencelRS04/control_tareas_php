@@ -69,22 +69,6 @@ require_once __DIR__ . '/../includes/header.php';
                    value="<?= htmlspecialchars($nombre) ?>">
         </div>
 
-        <?php if (count($tareasPendientes) > 0): ?>
-            <div class="mb-3">
-                <label class="form-label">Tareas pendientes a asociar <span class="text-muted">(opcional)</span></label>
-                <?php foreach ($tareasPendientes as $tarea): ?>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox"
-                               name="tareas[]"
-                               value="<?= (int)$tarea['id_tarea'] ?>"
-                               id="tarea_<?= (int)$tarea['id_tarea'] ?>">
-                        <label class="form-check-label" for="tarea_<?= (int)$tarea['id_tarea'] ?>">
-                            <?= htmlspecialchars(mb_strimwidth($tarea['detalle'], 0, 100, '...')) ?>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
 
         <div class="d-flex gap-2">
             <button class="btn btn-primary" type="submit">Guardar</button>

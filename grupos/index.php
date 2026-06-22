@@ -19,7 +19,9 @@ require_once __DIR__ . '/../includes/header.php';
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 mb-0">Grupos de tareas</h1>
+    <a class="btn btn-secondary" href="../index.php">Volver</a>
     <a class="btn btn-primary" href="crear.php">Nuevo grupo</a>
+    
 </div>
 
 <?php if (count($grupos) === 0): ?>
