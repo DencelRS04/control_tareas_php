@@ -43,7 +43,7 @@ require_once __DIR__ . '/../includes/header.php';
                 <th>Prioridad</th>
                 <th>Fecha límite</th>
                 <th>Estado</th>
-                <th>Acciones</th>
+
             </tr>
         </thead>
         <tbody>
@@ -56,12 +56,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <td><?= htmlspecialchars($tarea['prioridad']) ?></td>
                     <td><?= $tarea['fecha_limite'] ? htmlspecialchars($tarea['fecha_limite']) : '—' ?></td>
                     <td><?= htmlspecialchars($tarea['estado']) ?></td>
-                    <td>
-                        <a class="btn btn-sm btn-warning"
-                           href="../tareas/editar.php?id=<?= (int)$tarea['id_tarea'] ?>">
-                            Editar
-                        </a>
-                    </td>
+
                 </tr>
             <?php endforeach; ?>
         </tbody>
