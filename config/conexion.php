@@ -1,6 +1,8 @@
 <?php
 // config/conexion.php
 // Ajuste estos datos según su entorno local o hosting.
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
 
 define('DB_HOST', '138.59.135.33');
 define('DB_NAME', 'control_tareas');

@@ -19,17 +19,25 @@ $responsables = $conexion->query("
     ORDER BY nombre, apellidos
 ")->fetchAll();
 
+$grupos = $conexion->query("
+    SELECT id_grupo, nombre
+    FROM grupo_tarea
+    ORDER BY nombre
+")->fetchAll();
+
 $errores = [];
 $detalle = $tarea['detalle'];
 $idResponsable = $tarea['id_responsable'] ?? '';
 $prioridad = $tarea['prioridad'];
 $fechaLimite = $tarea['fecha_limite'] ?? '';
+$idGrupo = $tarea['id_grupo'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $detalle = trim($_POST['detalle'] ?? '');
     $idResponsable = $_POST['id_responsable'] ?? '';
     $prioridad = $_POST['prioridad'] ?? 'Media';
     $fechaLimite = trim($_POST['fecha_limite'] ?? '');
+    $idGrupo = $_POST['id_grupo'] ?? '';
 
     $prioridadesPermitidas = ['Baja', 'Media', 'Alta'];
 
@@ -43,12 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $idResponsableBD = $idResponsable === '' ? null : (int)$idResponsable;
     $fechaLimiteBD = $fechaLimite === '' ? null : $fechaLimite;
+    $idGrupoBD = $idGrupo === '' ? null : (int)$idGrupo;
 
     if (count($errores) === 0) {
         $sentencia = $conexion->prepare("
             UPDATE tarea
             SET detalle = :detalle,
                 id_responsable = :id_responsable,
+                id_grupo = :id_grupo,
                 prioridad = :prioridad,
                 fecha_limite = :fecha_limite
             WHERE id_tarea = :id
@@ -57,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sentencia->execute([
             ':detalle' => $detalle,
             ':id_responsable' => $idResponsableBD,
+            ':id_grupo' => $idGrupoBD,
             ':prioridad' => $prioridad,
             ':fecha_limite' => $fechaLimiteBD,
             ':id' => $id
@@ -116,6 +127,19 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="mb-3">
             <label class="form-label" for="fecha_limite">Fecha límite</label>
             <input class="form-control" type="date" id="fecha_limite" name="fecha_limite" value="<?= htmlspecialchars((string)$fechaLimite) ?>">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id_grupo">Grupo</label>
+            <select class="form-select" id="id_grupo" name="id_grupo">
+                <option value="">Sin grupo</option>
+                <?php foreach ($grupos as $grupo): ?>
+                    <?php $seleccionado = ((string)$grupo['id_grupo'] === (string)$idGrupo) ? 'selected' : ''; ?>
+                    <option value="<?= (int)$grupo['id_grupo'] ?>" <?= $seleccionado ?>>
+                        <?= htmlspecialchars($grupo['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
         <div class="d-flex gap-2">
