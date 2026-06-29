@@ -15,6 +15,7 @@ $filtroPrioridad   = $_GET['prioridad']       ?? '';
 $filtroResponsable = (int)($_GET['responsable'] ?? 0);
 $filtroFechaDesde  = $_GET['fecha_desde']     ?? '';
 $filtroFechaHasta  = $_GET['fecha_hasta']     ?? '';
+$filtroActivo      = $_GET['activo']          ?? '';   // '' = Todos, '1' = Activo, '0' = Inactivo
 
 // ── Construir consulta con filtros opcionales ───────────────────────────────
 $condiciones = ['1=1'];
@@ -38,6 +39,11 @@ if ($filtroFechaDesde !== '') {
 if ($filtroFechaHasta !== '') {
     $condiciones[] = '(fecha_limite IS NOT NULL AND fecha_limite <= :fecha_hasta)';
     $params[':fecha_hasta'] = $filtroFechaHasta;
+}
+
+if ($filtroActivo !== '') {
+    $condiciones[] = 'activo = :activo';
+    $params[':activo'] = (int)$filtroActivo;
 }
 
 $where = implode(' AND ', $condiciones);
@@ -120,6 +126,15 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php foreach (['Baja', 'Media', 'Alta'] as $p): ?>
                         <option value="<?= $p ?>" <?= $filtroPrioridad === $p ? 'selected' : '' ?>><?= $p ?></option>
                     <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-2">
+                <label class="form-label mb-1" for="f_activo">Estado</label>
+                <select class="form-select form-select-sm" id="f_activo" name="activo">
+                    <option value="">Todos</option>
+                    <option value="1" <?= $filtroActivo === '1' ? 'selected' : '' ?>>Activo</option>
+                    <option value="0" <?= $filtroActivo === '0' ? 'selected' : '' ?>>Inactivo</option>
                 </select>
             </div>
 
