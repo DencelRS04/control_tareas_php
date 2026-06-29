@@ -28,6 +28,15 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         </div>
     </div>
+    <div class="col-md-6 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="h5">Grupos de tareas</h2>
+                <p>Crear grupos y asociar tareas a ellos.</p>
+                <a class="btn btn-primary" href="grupos/index.php">Ir a grupos</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
