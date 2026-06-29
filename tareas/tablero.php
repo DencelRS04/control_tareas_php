@@ -15,7 +15,7 @@ $filtroPrioridad   = $_GET['prioridad']       ?? '';
 $filtroResponsable = (int)($_GET['responsable'] ?? 0);
 $filtroFechaDesde  = $_GET['fecha_desde']     ?? '';
 $filtroFechaHasta  = $_GET['fecha_hasta']     ?? '';
-$filtroActivo      = $_GET['activo']          ?? '';   // '' = Todos, '1' = Activo, '0' = Inactivo
+$filtroEstado      = $_GET['estado']           ?? '';
 
 // ── Construir consulta con filtros opcionales ───────────────────────────────
 $condiciones = ['1=1'];
@@ -41,9 +41,9 @@ if ($filtroFechaHasta !== '') {
     $params[':fecha_hasta'] = $filtroFechaHasta;
 }
 
-if ($filtroActivo !== '') {
-    $condiciones[] = 'activo = :activo';
-    $params[':activo'] = (int)$filtroActivo;
+if ($filtroEstado !== '') {
+    $condiciones[] = 'estado = :estado';
+    $params[':estado'] = $filtroEstado;
 }
 
 $where = implode(' AND ', $condiciones);
@@ -119,7 +119,7 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="card mb-4">
     <div class="card-body">
         <form method="get" class="row g-2 align-items-end">
-            <div class="col-sm-6 col-md-3">
+            <div class="col-sm-6 col-md-2">
                 <label class="form-label mb-1" for="f_prioridad">Prioridad</label>
                 <select class="form-select form-select-sm" id="f_prioridad" name="prioridad">
                     <option value="">Todas</option>
@@ -130,15 +130,6 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
 
             <div class="col-sm-6 col-md-2">
-                <label class="form-label mb-1" for="f_activo">Estado</label>
-                <select class="form-select form-select-sm" id="f_activo" name="activo">
-                    <option value="">Todos</option>
-                    <option value="1" <?= $filtroActivo === '1' ? 'selected' : '' ?>>Activo</option>
-                    <option value="0" <?= $filtroActivo === '0' ? 'selected' : '' ?>>Inactivo</option>
-                </select>
-            </div>
-
-            <div class="col-sm-6 col-md-3">
                 <label class="form-label mb-1" for="f_responsable">Responsable</label>
                 <select class="form-select form-select-sm" id="f_responsable" name="responsable">
                     <option value="0">Todos</option>
@@ -161,6 +152,16 @@ require_once __DIR__ . '/../includes/header.php';
                 <label class="form-label mb-1" for="f_fecha_hasta">Hasta</label>
                 <input class="form-control form-control-sm" type="date" id="f_fecha_hasta"
                        name="fecha_hasta" value="<?= htmlspecialchars($filtroFechaHasta) ?>">
+            </div>
+
+            <div class="col-sm-6 col-md-2">
+                <label class="form-label mb-1" for="f_estado">Estado</label>
+                <select class="form-select form-select-sm" id="f_estado" name="estado">
+                    <option value="">Todos</option>
+                    <?php foreach (['Pendiente', 'En progreso', 'Bloqueada', 'Finalizada'] as $e): ?>
+                        <option value="<?= $e ?>" <?= $filtroEstado === $e ? 'selected' : '' ?>><?= $e ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
             <div class="col-md-2 d-flex gap-2">

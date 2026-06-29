@@ -198,10 +198,6 @@ DELIMITER ;
 -- Datos de prueba opcionales.
 -- Puede borrarlos si desea entregar la base vacía.
 -- ============================================================
-
-ALTER TABLE tarea ADD COLUMN activo TINYINT(1) NOT NULL DEFAULT 1;
-CREATE INDEX idx_tarea_activo ON tarea(activo);
-
 INSERT INTO responsable (nombre, apellidos, identificacion) VALUES
 ('Carlos', 'Mora Solano', '101110111'),
 ('María', 'Rodríguez Arias', '202220222');
